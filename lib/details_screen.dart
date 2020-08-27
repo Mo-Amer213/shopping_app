@@ -6,7 +6,7 @@ class DetailsScreen extends StatefulWidget {
   final Product product;
 
   DetailsScreen({Key key, @required this.product}) : super(key: key);
-  int itemsCounter = 2;
+  int itemsCounter = 1;
 
   @override
   _DetailsScreenState createState() => _DetailsScreenState();
@@ -94,22 +94,63 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         ),
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          buildSingleOutlineBtn(() {
-                            setState(() {
-                              if(widget.itemsCounter>0)
-                                widget.itemsCounter--;
-                            });
-                          }, Icon(Icons.remove)),
-                          Text(
-                            ' ${widget.itemsCounter.toString().padLeft(2, '0')} ',
-                            style: TextStyle(fontSize: 20),
+                          Row(
+                            children: <Widget>[
+                              buildSingleOutlineBtn(() {
+                                setState(() {
+                                  if (widget.itemsCounter > 0)
+                                    widget.itemsCounter--;
+                                });
+                              }, Icon(Icons.remove)),
+                              Text(
+                                ' ${widget.itemsCounter.toString().padLeft(2, '0')} ',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              buildSingleOutlineBtn(() {
+                                setState(() {
+                                  widget.itemsCounter++;
+                                });
+                              }, Icon(Icons.add)),
+                            ],
                           ),
-                          buildSingleOutlineBtn(() {
-                           setState(() {
-                             widget.itemsCounter++;
-                           });
-                          }, Icon(Icons.add)),
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            child: SvgPicture.asset('assets/icons/heart.svg',
+                                fit: BoxFit.cover),
+                            decoration: BoxDecoration(
+                                color: Colors.red, shape: BoxShape.circle),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            child: SvgPicture.asset(
+                              'assets/icons/add_to_cart.svg',
+                              fit: BoxFit.fill,color: widget.product.color,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(color:widget.product.color),
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                            ),
+                          ),
+                          SizedBox(
+                            height: 50,
+                            width: 200,
+                            child: FlatButton(
+                              color: widget.product.color,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
+                              child: Text('Buy Now'.toUpperCase()),
+                              onPressed: (){},
+                            ),
+                          )
                         ],
                       )
                     ],
